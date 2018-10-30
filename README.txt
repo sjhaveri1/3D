@@ -22,11 +22,16 @@ tripD_concrete.m: uses an existing set of z coords and generates a model
 HELPER (functions)
 zOpt.m: randomly generates z vals until TED is optimal (method 1)
 gradOpt.m: slowly moves nodes up and down until a good TED is reached (method 2)
-denseOpt.m: places nodes according to number of connections (method 3)
+denseOpt.m: places nodes according to number of connections (method 3), not very good, so probably obsolete
 regionOpt.m: randomly arranges nodes, but in z ranges according to region (e.g. DG is z slices 1-3 if there are 18 slices)
+nodeDist.m: dist between two nodes
+fullNodeDist.m: TED calculator
+tripDist.m: calculates 3 dimensional distance between points, used by nodeDist and fullNodeDist
+countCxns.m: counts connections of one node, used by denseOpt.m
 
 ALL OTHER FILES:
-pretty much obsolete, I've kept them just in case but we probably won't be using them again
+pretty much obsolete, they were used for minimum spanning tree tests.
+I've kept them just in case but we probably won't be using them again
 
 FILE SUMMARY
 nodes1.xlsx: main excel sheet used, contains x-y coords, regions and excitatory/inhibitory
