@@ -12,7 +12,7 @@ function [z, dOpt] = gradOpt(gain,slices,half,cxns) %will return the optimal dis
         full(j,4) = gain*randi(slices,1); %randomly assigns a slice (z coord) in 3D
     end
     d = 0;
-    while fullNodeDist(full,cxns) >= 650000 %iterates "trials" number of times, generating new distances and z coords for each one 
+    while fullNodeDist(full,cxns) >= 800000 %iterates "trials" number of times, generating new distances and z coords for each one 
         d = fullNodeDist(full,cxns);
         z = full(:,4);
         for n = 1:122

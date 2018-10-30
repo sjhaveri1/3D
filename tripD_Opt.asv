@@ -12,8 +12,7 @@ img = imread('hippoForm_cells-paths.jpg');
 showNode = 123; %UI-thing, shows connections of node specified
 trials = 10000; %number of random trials for z coords (500 is roughly 4 seconds, watch out)
 height = 500;
-slices = 24; %number of slices, z coordinates will be randomized in this range
-%note: if using regionOpt, MUST be an even multiple of 3.
+slices = 18; %number of slices, z coordinates will be randomized in this range
 gain = height/slices; %amplification for more height to visualize points, 
                       %make them more proportionate to the rest of the model
 
@@ -46,7 +45,7 @@ numCxnsSorted = sortrows(numCxns,2);
 %[zs, dOpt] = zOpt(gain,slices,half,cxns); %optimizes the z coords
 %[zs, dOpt] = gradOpt(gain,slices,half,cxns);
 %[zs, dOpt] = denseOpt(numCxnsSorted,gain,slices,half,cxns);
-[zs, dOpt] = regionOpt(regions,gain,slices,half,cxns);
+[zs, dOpt] = regionOpt(regions,gain,slice
 full(:,4) = zs; %adds optimal z coords
 dOpt %total distance of optimized network
 

@@ -14,7 +14,7 @@ function [z, dOpt] = zOpt(gain,slices,half,cxns) %will return the optimal distan
         full(i,4) = gain*randi(slices,1); %randomly assigns a slice (z coord) in 3D
     end
     d = fullNodeDist(full,cxns);
-    while fullNodeDist(full,cxns) >= 800000 %this is the benchmark TED val 
+    while fullNodeDist(full,cxns) >= 850000 %this is the benchmark TED val 
         for j=1:122 
             full(j,4) = gain*randi(slices,1); %randomly assigns a slice (z coord) in 3D
         end 
