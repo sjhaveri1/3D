@@ -29,12 +29,21 @@ fullNodeDist.m: TED calculator
 tripDist.m: calculates 3 dimensional distance between points, used by nodeDist and fullNodeDist
 countCxns.m: counts connections of one node, used by denseOpt.m
 
-ALL OTHER FILES:
+ALL OTHER .m FILES:
 pretty much obsolete, they were used for minimum spanning tree tests.
 I've kept them just in case but we probably won't be using them again
 
 FILE SUMMARY
+
 nodes1.xlsx: main excel sheet used, contains x-y coords, regions and excitatory/inhibitory
 num_netlist.csv: numerical rep. of Netlist
 hippoForm_cells-paths.jpg: image used to plot 3D nodes over, used for visual reference
+
+SUBDIRECTORIES
+
+figures: plots of the 3D nodes
+coords: good trials are manually placed in here. 
+
+Note about coords: in the parent directory there is an excel file trialx.xlsx. In tripD_Opt.m, there is a variable t, which denotes the trial number.
+An excel file is created with this number replacing x, and if it is good, it is placed into coords. t should then be incremented for future trials.
 
