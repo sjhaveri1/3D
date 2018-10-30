@@ -4,7 +4,7 @@
 tic
 
 img = imread('hippoForm_cells-paths.jpg');
-trialnum = 3; %6 trials, pick one
+trialnum = 3; %trials in z_coords, pick one
 %figure
 %imshow(img), hold on
 
@@ -14,8 +14,8 @@ showNode = 34; %UI-thing, shows connections of node specified
 
 node = xlsread('nodes1.xlsx');
 cxns = xlsread('num_netlist.csv');
-filename = sprintf('z_coords/trial%d.xls', trialnum);
-zee = xlsread(filename);
+filepath = sprintf('z_coords/trial%d.xls', trialnum);
+zee = xlsread(filepath);
 zs = zee(:,1);
 
 %weights added to scale for the jpeg (this was as close as we could get to
