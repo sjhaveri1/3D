@@ -11,3 +11,25 @@ The last 3 use the optimization algorithm (z vals are moved one at a time slight
 figures of all 6 trials can be found in the folder 'figures', and excel files of coordinates in 'z_coords'
 
 If you are creating another algorithm, do it in a new .m file. You can copy the initial steps from the other files and it should work fine.
+
+CODE SUMMARY
+
+MAIN (run these files!)
+tripD.m: original main file to generate a 3D model, obsolete.
+tripD_Opt.m: optimizing generator, calls one of the optimization functions to get new z vals
+tripD_concrete.m: uses an existing set of z coords and generates a model
+
+HELPER (functions)
+zOpt.m: randomly generates z vals until TED is optimal (method 1)
+gradOpt.m: slowly moves nodes up and down until a good TED is reached (method 2)
+denseOpt.m: places nodes according to number of connections (method 3)
+regionOpt.m: randomly arranges nodes, but in z ranges according to region (e.g. DG is z slices 1-3 if there are 18 slices)
+
+ALL OTHER FILES:
+pretty much obsolete, I've kept them just in case but we probably won't be using them again
+
+FILE SUMMARY
+nodes1.xlsx: main excel sheet used, contains x-y coords, regions and excitatory/inhibitory
+num_netlist.csv: numerical rep. of Netlist
+hippoForm_cells-paths.jpg: image used to plot 3D nodes over, used for visual reference
+
