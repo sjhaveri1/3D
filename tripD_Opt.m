@@ -52,7 +52,7 @@ dOpt %total distance of optimized network
 
 toc
 
-t = 8;  %trial number for file
+t = 9;  %trial number for file
 
 str = sprintf('trial%d.xls',t);
 xlswrite(str,zs)
