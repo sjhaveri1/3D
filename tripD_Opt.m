@@ -1,7 +1,7 @@
 %the code that produces optimized plots with helper functions
 
 tic
-
+close all
 img = imread('hippoForm_cells-paths.jpg');
 
 %figure
@@ -54,7 +54,7 @@ dOpt %total distance of optimized network
 
 toc
 
-t = 9;  %trial number for file
+t = 10;  %trial number for file
 
 str = sprintf('trial%d.xls',t);
 xlswrite(str,zs)

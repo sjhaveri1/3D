@@ -29,7 +29,12 @@ function [z, dOpt] = hardRegionOpt(regions,gain,half,cxns)
             case 4
                 for j=1:length(regions)
                     if regions(j) == i
-                        full(j,4) = gain*randi([9,17],1);
+                        g = groups(j,cxns,regions);
+                        if or(g(6) == 1, g(5) ==1)
+                            full(j,4) = gain*randi([14,17],1);
+                        else
+                            full(j,4) = gain*randi([9,13],1);
+                        end
                     else
                         continue
                     end
@@ -45,7 +50,12 @@ function [z, dOpt] = hardRegionOpt(regions,gain,half,cxns)
             case 6
                 for j=1:length(regions)
                     if regions(j) == i
-                        full(j,4) = gain*randi([12,20],1);
+                        g = groups(j,cxns,regions);
+                        if or(g(1) == 1, g(2) == 1)
+                            full(j,4) = gain*randi([14,15],1);
+                        else                          
+                            full(j,4) = gain*randi([17,20],1);
+                        end
                     else
                         continue
                     end
