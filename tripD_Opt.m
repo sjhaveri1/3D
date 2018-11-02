@@ -46,7 +46,8 @@ numCxnsSorted = sortrows(numCxns,2);
 %[zs, dOpt] = zOpt(gain,slices,half,cxns); %optimizes the z coords
 %[zs, dOpt] = gradOpt(gain,slices,half,cxns);
 %[zs, dOpt] = denseOpt(numCxnsSorted,gain,slices,half,cxns);
-%[zs, dOpt] = regionOpt(regions,gain,slices,half,cxns);
+%needs even mult of 3 slices
+%[zs, dOpt] = regionOpt(regions,gain,slices,half,cxns); 
 [zs, dOpt] = hardRegionOpt(regions,gain,half,cxns);
 full(:,4) = zs; %adds optimal z coords
 dOpt %total distance of optimized network

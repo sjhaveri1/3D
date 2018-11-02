@@ -4,7 +4,7 @@
 tic
 
 img = imread('hippoForm_cells-paths.jpg');
-trialnum = 3; %trials in z_coords, pick one
+trialnum = 8; %trials in z_coords, pick one
 %figure
 %imshow(img), hold on
 
