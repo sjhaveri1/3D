@@ -9,7 +9,7 @@ img = imread('hippoForm_cells-paths.jpg');
 
 %shows all connections if > 122
 %none if 0
-showNode = 12; %UI-thing, shows connections of node specified
+showNode = 20; %UI-thing, shows connections of node specified
 trials = 10000; %number of random trials for z coords (500 is roughly 4 seconds, watch out)
 height = 500;
 slices = 20; %number of slices, z coordinates will be randomized in this range
