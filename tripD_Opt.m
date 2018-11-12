@@ -80,7 +80,11 @@ for i=1:122
             plot3(full(i,2),full(i,3),full(i,4), 'm.', 'MarkerSize',20), hold on
     end
 end
+
+scaling = 0;
+
 imshow(img), hold on
+
 str2 = sprintf('3D plot - Optimized, distance = %f',dOpt);
 title(str2)
 %plot connections based on showNode
@@ -119,6 +123,7 @@ end
 
 coords(:,3) = zs;
 
+%{
 run TREES1.15/start_trees
 d_MST = 0;
 
@@ -163,9 +168,10 @@ for i=showNode:showNode
     HP = plot_tree(temp_tree,[],[],[],[],'-3l');
     hold on
     set(HP, 'marker','*'), hold on
-    i
+    
 end
 
 save('SenDes.mat','coords','cxns','img','trees')
 
 d_MST
+%}
