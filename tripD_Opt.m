@@ -10,7 +10,7 @@ img = imread('hippoForm_cells-paths.jpg');
 
 %shows all connections if > 122
 %none if 0
-showNode = 20; %UI-thing, shows connections of node specified
+showNode = 89; %UI-thing, shows connections of node specified
 trials = 10000; %number of random trials for z coords (500 is roughly 4 seconds, watch out)
 height = 500;
 slices = 20; %number of slices, z coordinates will be randomized in this range
@@ -122,44 +122,6 @@ if showNode>0
 end
 
 coords(:,3) = zs;
-
-[pts,leaves] = branch(cxns,full,1,25);
-
-figure
-imshow(img), hold on, axis on
-for i=1:122
-    switch regions(i)
-        case 1
-            plot3(full(i,2),full(i,3),full(i,4), 'r.', 'MarkerSize',20), hold on
-        case 2
-            plot3(full(i,2),full(i,3),full(i,4), 'g.', 'MarkerSize',20), hold on
-        case 3
-            plot3(full(i,2),full(i,3),full(i,4), 'b.', 'MarkerSize',20), hold on
-        case 4
-            plot3(full(i,2),full(i,3),full(i,4), 'k.', 'MarkerSize',20), hold on
-        case 5
-            plot3(full(i,2),full(i,3),full(i,4), 'c.', 'MarkerSize',20), hold on
-        case 6
-            plot3(full(i,2),full(i,3),full(i,4), 'm.', 'MarkerSize',20), hold on
-    end
-end
-
-s = size(pts);
-plot3(coords(1,1),coords(1,2),coords(1,3),'b*'), hold on
-for i=1:s(1)
-    bi = pts(i,2:4);
-    pt1 = coords(1,:);
-    steinPlot(pt1,bi), hold on
-    leaf = leaves{i};
-    for j=1:length(leaf)
-        pt2 = coords(leaf(j),:);
-        if tripDist(bi,pt2)<=tripDist(pt1,pt2)
-            steinPlot(bi,pt2), hold on
-        else
-            steinPlot(pt1,pt2), hold on
-        end
-    end
-end
 
 %{
 run TREES1.15/start_trees
