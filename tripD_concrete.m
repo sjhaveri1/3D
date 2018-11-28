@@ -11,7 +11,7 @@ trialnum = 8; %trials in z_coords, pick one
 
 %shows all connections if > 122
 %none if 0
-showNode = 33; %UI-thing, shows connections of node specified
+showNode = 110; %UI-thing, shows connections of node specified
 
 node = xlsread('nodes1.xlsx');
 cxns = xlsread('num_netlist.csv');
@@ -109,7 +109,8 @@ imshow(img), hold on
 %fullBranch(cxns,full,regions,25);
 dOptStein = 0;
 %k=1;
-for i=1:1
+for i=showNode:showNode
+%for i=1:122
     
     [dCost,branchPoints,steinerLeaves] = steiner(i,cxns,coords,regions,25);
     dOptStein = dOptStein+dCost;
@@ -147,79 +148,41 @@ imshow(img), hold on
 
 dCost = 0;
 branchCount = 0;
-for i=1:1
-    
+for i=showNode:showNode
+%for i=1:122
     ref = coords(i,:);
     targets = getTargets(i,cxns);
-    if ~isempty(trunk{i})
-        br  = trunk{i};
-        plot3([ref(1),br(1)],[ref(2),br(2)],[ref(3),br(3)],'k', 'LineWidth',2)
-        branchCount = branchCount+1;
-        dCost = dCost+tripDist(ref,br);
-        for j=1:length(targets)
-            pt = coords(targets(j),:);
-            if getRegion(targets(j),regions) == getRegion(i,regions)
-                plot3([ref(1),pt(1)],[ref(2),pt(2)],[ref(3),pt(3)],'k-.')
-                dCost = dCost+tripDist(ref,pt);
-            else
-                plot3([br(1),pt(1)],[br(2),pt(2)],[br(3),pt(3)],'b')
-                dCost = dCost+tripDist(br,pt);
-            end
-        end
-    else
-        for j=1:length(targets)
-            pt = coords(targets(j),:);
-            plot3([ref(1),pt(1)],[ref(2),pt(2)],[ref(3),pt(3)],'k-.')
-            dCost = dCost+tripDist(ref,pt);
+    br  = trunk{i};
+    
+    m1 = [(ref(1)+br(1))/2,(ref(2)+br(2))/2,(ref(3)+br(3))/2];
+    m2 = [(ref(1)+m1(1))/2,(ref(2)+m1(2))/2,(ref(3)+m1(3))/2];
+    %m2 = br;
+    regComp = getRegion(i,regions);
+    counter = 1;
+    for x=1:length(targets)
+        if getRegion(targets(x),regions) ~= regComp
+            counter=counter+1;
         end
     end
+    
+    if counter == 1
+        plot3([ref(1),m2(1)],[ref(2),m2(2)],[ref(3),m2(3)],'k', 'LineWidth',2), hold on
+    else
+        plot3([ref(1),br(1)],[ref(2),br(2)],[ref(3),br(3)],'k', 'LineWidth',2), hold on
+    end
+    
+    for j=1:length(targets)
+        pt = coords(targets(j),:);
+        if getRegion(targets(j),regions) == getRegion(i,regions)
+            plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'r')
+            dCost = dCost+tripDist(m2,pt);
+        else
+            plot3([br(1),pt(1)],[br(2),pt(2)],[br(3),pt(3)],'b')
+            dCost = dCost+tripDist(br,pt);
+        end
+    end
+    
 end
 
 dCost
-branchCount
-
-%{
-[pts,leaves,extra] = branch(cxns,full,showNode,25,regions);
-
-figure
-imshow(img), hold on, axis on
-for i=1:122
-    switch regions(i)
-        case 1
-            plot3(full(i,2),full(i,3),full(i,4), 'r.', 'MarkerSize',20), hold on
-        case 2
-            plot3(full(i,2),full(i,3),full(i,4), 'g.', 'MarkerSize',20), hold on
-        case 3
-            plot3(full(i,2),full(i,3),full(i,4), 'b.', 'MarkerSize',20), hold on
-        case 4
-            plot3(full(i,2),full(i,3),full(i,4), 'k.', 'MarkerSize',20), hold on
-        case 5
-            plot3(full(i,2),full(i,3),full(i,4), 'c.', 'MarkerSize',20), hold on
-        case 6
-            plot3(full(i,2),full(i,3),full(i,4), 'm.', 'MarkerSize',20), hold on
-    end
-end
-
-s = size(pts);
-plot3(coords(showNode,1),coords(showNode,2),coords(showNode,3),'b*'), hold on
-for i=1:s(1)
-    bi = pts(i,:);
-    pt1 = coords(showNode,:);
-    steinPlot(pt1,bi), hold on
-    leaf = leaves{i};
-    for j=1:length(leaf)
-        pt2 = coords(leaf(j),:);
-        if tripDist(bi,pt2)<=tripDist(pt1,pt2)
-            steinPlot(bi,pt2), hold on
-        else
-            steinPlot(pt1,pt2), hold on
-        end
-    end
-    for k=1:length(extra)
-        pt2 = coords(extra(k),:);
-        steinPlot(pt1,pt2), hold on
-    end
-end
-%}
-
 
