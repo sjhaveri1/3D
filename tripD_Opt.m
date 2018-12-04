@@ -10,7 +10,7 @@ img = imread('hippoForm_cells-paths.jpg');
 
 %shows all connections if > 122
 %none if 0
-showNode = 89; %UI-thing, shows connections of node specified
+showNode = 123; %UI-thing, shows connections of node specified
 trials = 10000; %number of random trials for z coords (500 is roughly 4 seconds, watch out)
 height = 500;
 slices = 20; %number of slices, z coordinates will be randomized in this range
@@ -47,15 +47,13 @@ numCxnsSorted = sortrows(numCxns,2);
 %[zs, dOpt] = zOpt(gain,slices,half,cxns); %optimizes the z coords
 %[zs, dOpt] = gradOpt(gain,slices,half,cxns);
 %[zs, dOpt] = denseOpt(numCxnsSorted,gain,slices,half,cxns);
-%needs even mult of 3 slices
-%[zs, dOpt] = regionOpt(regions,gain,slices,half,cxns); 
 [zs, dOpt] = hardRegionOpt(regions,gain,half,cxns);
 full(:,4) = zs; %adds optimal z coords
 dOpt %total distance of optimized network
 
 toc
 
-t = 10;  %trial number for file
+t = 11;  %trial number for file
 
 str = sprintf('trial%d.xls',t);
 xlswrite(str,zs)
@@ -122,56 +120,3 @@ if showNode>0
 end
 
 coords(:,3) = zs;
-
-%{
-run TREES1.15/start_trees
-d_MST = 0;
-
-for i=showNode:showNode
-%for i=1:122
-    j=1;
-    while cxns(j,1) ~= i
-        j = j+1;
-    end
-    k=1;
-    while cxns(j,1) == i
-        main = coords(cxns(j,1),:);
-        targets(k,:) = coords(cxns(j,2),:);
-        k = k+1;
-        j = j+1;
-        if j > length(cxns)
-            break
-        end
-    end
-    X = [coords(i,1);targets(:,1)];
-    Y = [coords(i,2);targets(:,2)];
-    Z = [coords(i,3);targets(:,3)];
-    %Z = zeros(length(X),1);
-    %figure
-    temp_tree = MST_tree (1, X,Y,Z, 0, 900,[],[]);
-    %bCoords = [tree{i}.X, tree{i}.Y, tree{i}.Z];
-    %MST_tree (1, X,Y,Z,0);
-    rows = size(targets);
-    rows = rows(1);
-    d_MST = d_MST+sum(len_tree(temp_tree));
-    %{
-    plot3(main(1,1),main(1,2),main(1,3),'r.', 'MarkerSize',20), hold on
-    for x=1:rows
-        plot3(targets(x,1),targets(x,2),targets(x,3),'b.', 'MarkerSize',20), hold on
-        plot3([main(1,1),targets(x,1)],[main(1,2),targets(x,2)],[main(1,3),targets(x,3)]), hold on
-        %plot(targets(x,1),targets(x,2),'r.', 'MarkerSize',20), hold on
-        %plot([targets(1,1),targets(x,1)],[targets(1,2),targets(x,2)]), hold on
-    end
-    %}
-    
-    %figure
-    HP = plot_tree(temp_tree,[],[],[],[],'-3l');
-    hold on
-    set(HP, 'marker','*'), hold on
-    
-end
-
-save('SenDes.mat','coords','cxns','img','trees')
-
-d_MST
-%}

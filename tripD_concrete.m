@@ -5,13 +5,13 @@ close all
 tic
 
 img = imread('hippoForm_cells-paths.jpg');
-trialnum = 8; %trials in z_coords, pick one
+trialnum = 10; %trials in z_coords, pick one
 %figure
 %imshow(img), hold on
 
 %shows all connections if > 122
 %none if 0
-showNode = 110; %UI-thing, shows connections of node specified
+showNode = 20; %UI-thing, shows connections of node specified
 
 node = xlsread('nodes1.xlsx');
 cxns = xlsread('num_netlist.csv');
@@ -109,8 +109,8 @@ imshow(img), hold on
 %fullBranch(cxns,full,regions,25);
 dOptStein = 0;
 %k=1;
-for i=showNode:showNode
-%for i=1:122
+%for i=showNode:showNode
+for i=1:122
     
     [dCost,branchPoints,steinerLeaves] = steiner(i,cxns,coords,regions,25);
     dOptStein = dOptStein+dCost;
@@ -148,8 +148,8 @@ imshow(img), hold on
 
 dCost = 0;
 branchCount = 0;
-for i=showNode:showNode
-%for i=1:122
+%for i=showNode:showNode
+for i=1:122
     ref = coords(i,:);
     targets = getTargets(i,cxns);
     br  = trunk{i};
