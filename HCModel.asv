@@ -9,7 +9,7 @@ close all
 tic
 
 img = imread('hippoForm_cells-paths.png');
-img=img-50;
+
 node = xlsread('nodes1.xlsx');
 cxns = xlsread('num_netlist.csv');
 save('cxns.mat','cxns')
@@ -19,7 +19,6 @@ str = sprintf('trial%d.mat',trial);
 zs = load(str);
 zs = cell2mat(struct2cell(zs));
 %bracket
-%{
 zs = [125
     200
     125
@@ -199,54 +198,46 @@ switch display
                 case 0
                     blk = blk+1;
                     h4 = plot3(full(i,2),full(i,3),full(i,4), 'k.', 'MarkerSize',30);
-                    %text(full(i,2),full(i,3),full(i,4),sprintf('%d',i))
+                    text(full(i,2),full(i,3),full(i,4),sprintf('%d',i))
                     hold on
-                    %{
                     if i==showNode
                         plot3(full(i,2),full(i,3),full(i,4), 'ro', 'MarkerSize',15), hold on
                         plot3(full(i,2),full(i,3),full(i,4), 'bo', 'MarkerSize',17), hold on
                         plot3(full(i,2),full(i,3),full(i,4), 'ko', 'MarkerSize',20), hold on
                     end
-                    %}
                 case 1
                     redd = redd+1;
                     h1 = plot3(full(i,2),full(i,3),full(i,4), 'r.', 'MarkerSize',30);
-                    %text(full(i,2),full(i,3),full(i,4),sprintf('%d',i))
+                    text(full(i,2),full(i,3),full(i,4),sprintf('%d',i))
                     hold on
-                    %{
                     if i==showNode
                         plot3(full(i,2),full(i,3),full(i,4), 'ro', 'MarkerSize',15), hold on
                         plot3(full(i,2),full(i,3),full(i,4), 'bo', 'MarkerSize',17), hold on
                         plot3(full(i,2),full(i,3),full(i,4), 'ko', 'MarkerSize',20), hold on
                     end
-                    %}
                 case 2
                     greenn = greenn+1;
                     h2 = plot3(full(i,2),full(i,3),full(i,4), 'g.', 'MarkerSize',30);
-                    %text(full(i,2),full(i,3),full(i,4),sprintf('%d',i))
+                    text(full(i,2),full(i,3),full(i,4),sprintf('%d',i))
                     hold on
-                    %{
                     if i==showNode
                         plot3(full(i,2),full(i,3),full(i,4), 'ro', 'MarkerSize',15), hold on
                         plot3(full(i,2),full(i,3),full(i,4), 'bo', 'MarkerSize',17), hold on
                         plot3(full(i,2),full(i,3),full(i,4), 'ko', 'MarkerSize',20), hold on
                     end
-                    %}
                 case 3
                     bluee = bluee+1;
                     h3 = plot3(full(i,2),full(i,3),full(i,4), 'c.', 'MarkerSize',30);
-                    %text(full(i,2),full(i,3),full(i,4),sprintf('%d',i))
+                    text(full(i,2),full(i,3),full(i,4),sprintf('%d',i))
                     hold on
-                    %{
                     if i==showNode
                         plot3(full(i,2),full(i,3),full(i,4), 'ro', 'MarkerSize',15), hold on
                         plot3(full(i,2),full(i,3),full(i,4), 'bo', 'MarkerSize',17), hold on
                         plot3(full(i,2),full(i,3),full(i,4), 'ko', 'MarkerSize',20), hold on
                     end
-                    %}
             end
         end
-        imshow(img), hold on, axis on%, grid on
+        imshow(img), hold on, axis on, grid on
         %legend([h1,h2,h3,h4],'Inhibitory (Axo-dendritic)','Inhibitory (Axo-somatic)','Inhibitory (Interneuron-specific)','Excitatory (Glutamatergic)')
         view(0,90)
         
@@ -286,21 +277,21 @@ switch display
                                 end
                             case 1
                                 if getRegion(targets(j),regions) == getRegion(i,regions)
-                                    plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'r')
+                                    plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'k')
                                 else
-                                    plot3([br(1),pt(1)],[br(2),pt(2)],[br(3),pt(3)],'r')
+                                    plot3([br(1),pt(1)],[br(2),pt(2)],[br(3),pt(3)],'k')
                                 end
                             case 2
                                 if getRegion(targets(j),regions) == getRegion(i,regions)
-                                    plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'g')
+                                    plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'k')
                                 else
-                                    plot3([br(1),pt(1)],[br(2),pt(2)],[br(3),pt(3)],'g')
+                                    plot3([br(1),pt(1)],[br(2),pt(2)],[br(3),pt(3)],'k')
                                 end
                             case 3
                                 if getRegion(targets(j),regions) == getRegion(i,regions)
-                                    plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'c')
+                                    plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'k')
                                 else
-                                    plot3([br(1),pt(1)],[br(2),pt(2)],[br(3),pt(3)],'c')
+                                    plot3([br(1),pt(1)],[br(2),pt(2)],[br(3),pt(3)],'k')
                                 end
                         end
                         %{
@@ -341,31 +332,15 @@ switch display
                     for j=1:length(targets)
                         pt = coords(targets(j),:);
                     switch colors(i)
-                            case 0
-                                if getRegion(targets(j),regions) == getRegion(i,regions)
-                                    plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'k')
-                                else
-                                    plot3([br(1),pt(1)],[br(2),pt(2)],[br(3),pt(3)],'k')
-                                end
-                            case 1
-                                if getRegion(targets(j),regions) == getRegion(i,regions)
-                                    plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'r')
-                                else
-                                    plot3([br(1),pt(1)],[br(2),pt(2)],[br(3),pt(3)],'r')
-                                end
-                            case 2
-                                if getRegion(targets(j),regions) == getRegion(i,regions)
-                                    plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'g')
-                                else
-                                    plot3([br(1),pt(1)],[br(2),pt(2)],[br(3),pt(3)],'g')
-                                end
-                            case 3
-                                if getRegion(targets(j),regions) == getRegion(i,regions)
-                                    plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'c')
-                                else
-                                    plot3([br(1),pt(1)],[br(2),pt(2)],[br(3),pt(3)],'c')
-                                end
-                        end
+                        case 0
+                            plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'k')
+                        case 1
+                            plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'r')
+                        case 2
+                            plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'g')
+                        case 3
+                            plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'c')
+                    end
                     %{
                         if getRegion(targets(j),regions) == getRegion(i,regions)
                             plot3([m2(1),pt(1)],[m2(2),pt(2)],[m2(3),pt(3)],'b')

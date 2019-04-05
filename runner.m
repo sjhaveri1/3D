@@ -1,8 +1,9 @@
 close all
 
 trial = 10;
-clusters(trial,100,10,15)
-HCModel(113,'t',trial)
+%clusters(trial,100,10,15)
+%[1,2,3,20,54,91,93,94,115]
+HCModel(1,'t',trial)
 load('zcoords.mat')
 load('dank.mat')
 load('cxns.mat')
