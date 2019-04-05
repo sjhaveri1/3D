@@ -36,10 +36,10 @@ if sum(shortTargets(:,1)) == 0
     m1 = [(refNode(1)+bi(1))/2,(refNode(2)+bi(2))/2,(refNode(3)+bi(3))/2];
     bi = [(refNode(1)+m1(1))/2,(refNode(2)+m1(2))/2,(refNode(3)+m1(3))/2];
     %branchPoints = [size(points,1),bi];
-    plot3([refNode(1),bi(1)],[refNode(2),bi(2)],[refNode(3),bi(3)],'k','LineWidth',1.5), hold on
+    %plot3([refNode(1),bi(1)],[refNode(2),bi(2)],[refNode(3),bi(3)],'k','LineWidth',1.5), hold on
     for p=1:size(extraTargets,1)
         pt1 = coords(extraTargets(p,1),:);
-        plot3([bi(1),pt1(1)],[bi(2),pt1(2)],[bi(3),pt1(3)],'g'), hold on
+        %plot3([bi(1),pt1(1)],[bi(2),pt1(2)],[bi(3),pt1(3)],'g'), hold on
         dCost = dCost+tripDist(refNode,pt1);
     end
     
@@ -49,21 +49,21 @@ else
         mid = [(refNode(1)+pt2(1))/2,(refNode(2)+pt2(2))/2,(refNode(3)+pt2(3))/2];
         branchPoints = [1,mid];
         steinerLeaves{1} = shortTargets(:,1);
-        plot3(refNode(1),refNode(2),refNode(3),'k*'), hold on
+        %plot3(refNode(1),refNode(2),refNode(3),'k*'), hold on
         for p=1:size(branchPoints,1)
             bi = branchPoints(p,2:4);
-            plot3([refNode(1),bi(1)],[refNode(2),bi(2)],[refNode(3),bi(3)],'k', 'LineWidth',1.5), hold on
+            %plot3([refNode(1),bi(1)],[refNode(2),bi(2)],[refNode(3),bi(3)],'k', 'LineWidth',1.5), hold on
             %dCost = dCost+tripDist(refNode,bi);
             currentNodes = steinerLeaves{1};
             for q=1:length(currentNodes)
                 pt2 = coords(currentNodes(q),:);
-                plot3([bi(1),pt2(1)],[bi(2),pt2(2)],[bi(3),pt2(3)],'b'), hold on
+                %plot3([bi(1),pt2(1)],[bi(2),pt2(2)],[bi(3),pt2(3)],'b'), hold on
                 %dCost = dCost+tripDist(bi,pt2);
             end
         end
         for p=1:size(extraTargets,1)
             pt1 = coords(extraTargets(p,1),:);
-            plot3([refNode(1),pt1(1)],[refNode(2),pt1(2)],[refNode(3),pt1(3)],'k-.'), hold on
+            %plot3([refNode(1),pt1(1)],[refNode(2),pt1(2)],[refNode(3),pt1(3)],'k-.'), hold on
             dCost = dCost+tripDist(refNode,pt1);
         end
     else
@@ -175,28 +175,28 @@ else
                 end
             end
             %plotting
-            plot3(refNode(1),refNode(2),refNode(3),'k*'), hold on
+            %plot3(refNode(1),refNode(2),refNode(3),'k*'), hold on
             for p=1:size(branchPoints,1)
                 bi = branchPoints(p,2:4);
-                plot3([refNode(1),bi(1)],[refNode(2),bi(2)],[refNode(3),bi(3)],'k', 'LineWidth',1.5), hold on
+                %plot3([refNode(1),bi(1)],[refNode(2),bi(2)],[refNode(3),bi(3)],'k', 'LineWidth',1.5), hold on
                 dCost = dCost+tripDist(refNode,bi);
                 currentNodes = steinerLeaves{p};
                 for q=1:length(currentNodes)
                     pt2 = coords(currentNodes(q),:);
-                    plot3([bi(1),pt2(1)],[bi(2),pt2(2)],[bi(3),pt2(3)],'b'), hold on
+                    %plot3([bi(1),pt2(1)],[bi(2),pt2(2)],[bi(3),pt2(3)],'b'), hold on
                     dCost = dCost+tripDist(bi,pt2);
                 end
             end
             for p=1:size(extraTargets,1)
                 pt1 = coords(extraTargets(p,1),:);
-                plot3([refNode(1),pt1(1)],[refNode(2),pt1(2)],[refNode(3),pt1(3)],'k-.'), hold on
+                %plot3([refNode(1),pt1(1)],[refNode(2),pt1(2)],[refNode(3),pt1(3)],'k-.'), hold on
                 dCost = dCost+tripDist(refNode,pt1);
             end
         else
             %edge case, less then 2 targets in outer region
             for p=1:size(extraTargets,1)
                 pt1 = coords(extraTargets(p,1),:);
-                plot3([refNode(1),pt1(1)],[refNode(2),pt1(2)],[refNode(3),pt1(3)],'k-.'), hold on
+                %plot3([refNode(1),pt1(1)],[refNode(2),pt1(2)],[refNode(3),pt1(3)],'k-.'), hold on
                 dCost = dCost+tripDist(refNode,pt1);
             end
             branchPoints=0;

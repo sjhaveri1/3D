@@ -10,13 +10,13 @@ img = imread('hippoForm_cells-paths.jpg');
 
 %shows all connections if > 122
 %none if 0
-showNode = 123; %UI-thing, shows connections of node specified
+showNode = 91; %UI-thing, shows connections of node specified
 trials = 10000; %number of random trials for z coords (500 is roughly 4 seconds, watch out)
 height = 500;
 slices = 20; %number of slices, z coordinates will be randomized in this range
 %note: if using regionOpt, MUST be an even multiple of 3.
-gain = height/slices; %amplification for more height to visualize points, 
-                      %make them more proportionate to the rest of the model
+gain = height/slices; %amplification for more height to visualize points,
+%make them more proportionate to the rest of the model
 
 node = xlsread('nodes1.xlsx');
 cxns = xlsread('num_netlist.csv');
@@ -25,7 +25,7 @@ cxns = xlsread('num_netlist.csv');
 %the original)
 coords = [1.31*node(:,1),1.05*node(:,2), zeros(122,1)];
 regions = node(:,4);
-excite = node(:,3);
+states = node(:,3);
 
 %adds neuron type nums next to coords
 nodes = zeros(122,1);
@@ -44,10 +44,10 @@ end
 
 numCxnsSorted = sortrows(numCxns,2);
 
-%[zs, dOpt] = zOpt(gain,slices,half,cxns); %optimizes the z coords
+[zs, dOpt] = zOpt(gain,slices,half,cxns); %optimizes the z coords
 %[zs, dOpt] = gradOpt(gain,slices,half,cxns);
 %[zs, dOpt] = denseOpt(numCxnsSorted,gain,slices,half,cxns);
-[zs, dOpt] = hardRegionOpt(regions,gain,half,cxns);
+%[zs, dOpt] = hardRegionOpt(regions,gain,half,cxns);
 full(:,4) = zs; %adds optimal z coords
 dOpt %total distance of optimized network
 
@@ -63,28 +63,51 @@ figure
 %this is the preliminary 3D model
 %plot3(full(:,2),full(:,3),full(:,4), 'r.', 'MarkerSize',20), hold on
 for i=1:122
-    switch regions(i)
+    switch states(i)
+        case 0
+            randcolor = randi(3,1);
+            switch randcolor
+                case 1
+                    h1 = plot3(full(i,2),full(i,3),full(i,4), 'r.', 'MarkerSize',30);
+                    hold on
+                case 2
+                    h2 = plot3(full(i,2),full(i,3),full(i,4), 'g.', 'MarkerSize',30);
+                    hold on
+                case 3
+                    h3 = plot3(full(i,2),full(i,3),full(i,4), 'b.', 'MarkerSize',30);
+                    hold on
+            end
         case 1
-            plot3(full(i,2),full(i,3),full(i,4), 'r.', 'MarkerSize',20), hold on
-        case 2
-            plot3(full(i,2),full(i,3),full(i,4), 'g.', 'MarkerSize',20), hold on
-        case 3
-            plot3(full(i,2),full(i,3),full(i,4), 'b.', 'MarkerSize',20), hold on
-        case 4
-            plot3(full(i,2),full(i,3),full(i,4), 'k.', 'MarkerSize',20), hold on
-        case 5
-            plot3(full(i,2),full(i,3),full(i,4), 'c.', 'MarkerSize',20), hold on
-        case 6
-            plot3(full(i,2),full(i,3),full(i,4), 'm.', 'MarkerSize',20), hold on
+            h4 = plot3(full(i,2),full(i,3),full(i,4), 'k.', 'MarkerSize',30);
+            hold on
     end
 end
+%{
+for i=1:122
+    switch regions(i)
+        case 1
+            plot3(full(i,2),full(i,3),full(i,4), 'r.', 'MarkerSize',30), hold on
+        case 2
+            plot3(full(i,2),full(i,3),full(i,4), 'g.', 'MarkerSize',30), hold on
+        case 3
+            plot3(full(i,2),full(i,3),full(i,4), 'b.', 'MarkerSize',30), hold on
+        case 4
+            plot3(full(i,2),full(i,3),full(i,4), 'k.', 'MarkerSize',30), hold on
+        case 5
+            plot3(full(i,2),full(i,3),full(i,4), 'c.', 'MarkerSize',30), hold on
+        case 6
+            plot3(full(i,2),full(i,3),full(i,4), 'm.', 'MarkerSize',30), hold on
+    end
+end
+%}
 
 scaling = 0;
 
-imshow(img), hold on
+imshow(img), hold on, axis on, grid on
+legend([h1,h2,h3,h4],'Inhibitory (1)','Inhibitory (2)','Inhibitory (3)','Excitatory')
 
-str2 = sprintf('3D plot - Optimized, distance = %f',dOpt);
-title(str2)
+%str2 = sprintf('Random Control');
+title('Random Control')
 %plot connections based on showNode
 if showNode>0
     if showNode<123 %only plots one node's connections
@@ -108,7 +131,7 @@ if showNode>0
             %d = d + nodeDist(i,full,cxns); %eventually gives full distance of the network
             while cxns(m,1) == i
                 pt1 = full(i,2:4);
-                pt2 = full(cxns(m,2),2:4); 
+                pt2 = full(cxns(m,2),2:4);
                 plot3([pt1(1) pt2(1)],[pt1(2) pt2(2)],[pt1(3) pt2(3)]), hold on
                 m = m+1;
                 if m > 3236
