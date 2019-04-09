@@ -9,7 +9,7 @@ close all
 tic
 
 img = imread('hippoForm_cells-paths.png');
-img=img-50;
+%img=img-50;
 node = xlsread('nodes1.xlsx');
 cxns = xlsread('num_netlist.csv');
 save('cxns.mat','cxns')
@@ -246,9 +246,12 @@ switch display
                     %}
             end
         end
-        imshow(img), hold on, axis on%, grid on
-        %legend([h1,h2,h3,h4],'Inhibitory (Axo-dendritic)','Inhibitory (Axo-somatic)','Inhibitory (Interneuron-specific)','Excitatory (Glutamatergic)')
+        imshow(img), hold on, axis on, grid on
+        legend([h1,h2,h3,h4],'Inhibitory (Axo-dendritic)','Inhibitory (Axo-somatic)','Inhibitory (Interneuron-specific)','Excitatory (Glutamatergic)')
         view(0,90)
+        xlabel('x (px)')
+        ylabel('y (px)')
+        zlabel('z (px)')
         
         dCost = 0;
         branchCount = 0;
